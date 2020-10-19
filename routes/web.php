@@ -33,5 +33,9 @@ Route::get('/dashboard/transactions/{id}', 'DashboardTransactionController@detai
 Route::get('/dashboard/settings', 'DashboardSettingController@store')->name('dashboard-settings-store');
 Route::get('/dashboard/account', 'DashboardSettingController@account')->name('dashboard-settings-account');
 
+Route::prefix('admin')->group(function(){
+    Route::get('/','Admin\DashboardController@index')->name('dashboard-admin');
+    Route::resource('category', 'Admin\CategoryController');
+});
 Auth::routes();
 
