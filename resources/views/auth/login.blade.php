@@ -28,6 +28,7 @@
                   name="email"
                   id="email"
                   class="form-control w-75"
+                  autofocus
                 />
               </div>
               <div class="form-group">
