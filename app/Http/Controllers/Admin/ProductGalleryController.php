@@ -3,13 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Admin\UserRequest;
-use App\User;
+use App\Http\Requests\Admin\ProductGalleryRequest;
+use App\Product;
+use App\ProductGallery;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
-class UserController extends Controller
+class ProductGalleryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +20,7 @@ class UserController extends Controller
     public function index()
     {
         if(request()->ajax()){
-            $query = User::query();
+            $query = ProductGallery::with(['product']);
             
             return DataTables::of($query)
                     ->addColumn('action', function($item){
@@ -30,10 +31,10 @@ class UserController extends Controller
                                     Aksi
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a href=" ' . route('user.edit', $item->id) .' " class="dropdown-item">
+                                    <a href=" ' . route('product-gallery.edit', $item->id) .' " class="dropdown-item">
                                         Sunting
                                     </a>
-                                    <form action="'.route('user.destroy', $item->id).'" method="POST">
+                                    <form action="'.route('product-gallery.destroy', $item->id).'" method="POST">
                                         '.method_field('delete').csrf_field().'
                                         <button type="submit" class="dropdown-item text-danger">Hapus</button>
                                     </form>
@@ -41,10 +42,13 @@ class UserController extends Controller
                             </div>
                         ';
                     })
-                    ->rawColumns(['action'])
+                    ->editColumn('photos',function($item){
+                        return $item->photos ? '<img src="'. Storage::url($item->photos) .'" style="max-height: 80px" />' : '';
+                    })
+                    ->rawColumns(['action','photos'])
                     ->make();
         }
-        return view('pages.admin.user.index');
+        return view('pages.admin.product-gallery.index');
     }
 
     /**
@@ -54,7 +58,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('pages.admin.user.create');
+        $products = Product::all();
+        return view('pages.admin.product-gallery.create',[
+            'products' => $products
+        ]);
     }
 
     /**
@@ -63,14 +70,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(UserRequest $request)
+    public function store(ProductGalleryRequest $request)
     {
         $data = $request->all();
-        $data['password'] = bcrypt($request->password);
+        $data['photos'] = $request->file('photos')->store('assets/product','public');
+        ProductGallery::create($data);
 
-        User::create($data);
-
-        return redirect()->route('user.index');
+        return redirect()->route('product-gallery.index');
     }
 
     /**
@@ -92,9 +98,7 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $item = User::findOrFail($id);
-
-        return view('pages.admin.user.edit',['item' => $item]);
+        //
     }
 
     /**
@@ -106,46 +110,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request,[
-            'name' => 'required|max:50|string',
-            'email' => 'string|email' . Auth::id()
-        ]);
-
-        $data = $request->all();
-
-        $item = User::findOrFail($id);
-
-        if($request->password){
-            $data['password'] = bcrypt($request->password);
-        } else{
-            unset($data['password']);
-        }
-
-        // if ($request->email == User::where('email')) {
-        //     // unset($data['email']);
-        //     // $data = $request->email;
-        //     unset($data,$request->email);
-        // }
-        // $request->email == User::get('email', $id)->findOrFail();
-        // if(User::where('email') == $request->email){
-        //     unset($request->email);
-        // }
-
-        
-        // if($check){
-        //     $this->validate($request,[
-        //         'name' => 'required|max:50|string',
-        //         'email' => 'required|string'
-        //     ]);
-
-        //     if($check->email == $request->email){
-        //         $data['email'] = $check->email;
-        //     }
-        // }
-
-        $item->update($data);
-
-        return redirect()->route('user.index');
+        //
     }
 
     /**
@@ -156,9 +121,9 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        $item = User::findOrFail($id);
+        $item = ProductGallery::findOrFail($id);
         $item->delete();
 
-        return redirect()->route('user.index');
+        return redirect()->route('product-gallery.index');
     }
 }

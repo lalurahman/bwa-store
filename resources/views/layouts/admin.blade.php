@@ -39,9 +39,14 @@
               >Dashboard</a
             >
             <a
-              href="{{ route('product.index') }}"
-              class="list-group-item list-group-item-action {{ (request()->is('admin/product*')) ? 'active' : '' }}"
+              href="{{ route('products.index') }}"
+              class="list-group-item list-group-item-action {{ (request()->is('admin/products*')) ? 'active' : '' }}"
               >Products</a
+            >
+            <a
+              href="{{ route('product-gallery.index') }}"
+              class="list-group-item list-group-item-action {{ (request()->is('admin/product-gallery*')) ? 'active' : '' }}"
+              >Galleries</a
             >
             <a
               href="{{ route('category.index') }}"
@@ -93,37 +98,39 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- desktop -->
-                <ul class="navbar-nav d-none d-lg-flex ml-auto">
-                  <li class="nav-item dropdown">
-                    <a
-                      href="#"
-                      class="nav-link"
-                      role="button"
-                      id="navbarDropdown"
-                      data-toggle="dropdown"
-                    >
-                      <img
-                        src="/images/icon-user.png"
-                        alt="profile"
-                        class="rounded-circle mr-2 profile-picture"
-                      />
-                      Hi, Lalu
-                    </a>
-                    <div class="dropdown-menu">
+                @auth
+                    <!-- desktop -->
+                    <ul class="navbar-nav d-none d-lg-flex ml-auto">
+                      <li class="nav-item dropdown">
+                        <a
+                          href="#"
+                          class="nav-link"
+                          role="button"
+                          id="navbarDropdown"
+                          data-toggle="dropdown"
+                        >
+                          <img
+                            src="/images/icon-user.png"
+                            alt="profile"
+                            class="rounded-circle mr-2 profile-picture"
+                          />
+                          Hi, {{ Auth::user()->name }}
+                        </a>
+                        <div class="dropdown-menu">
+                          
+                          <a href="#" class="dropdown-item">Logout</a>
+                        </div>
+                      </li>
                       
-                      <a href="#" class="dropdown-item">Logout</a>
-                    </div>
-                  </li>
-                  
-                </ul>
-                <!-- mobile -->
-                <ul class="navbar-nav d-block d-lg-none">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">Hi, Lalu</a>
-                  </li>
-                
-                </ul>
+                    </ul>
+                    <!-- mobile -->
+                    <ul class="navbar-nav d-block d-lg-none">
+                      <li class="nav-item">
+                        <a href="#" class="nav-link">Hi, Lalu</a>
+                      </li>
+                    
+                    </ul>
+                @endauth
               </div>
             </div>
           </nav>

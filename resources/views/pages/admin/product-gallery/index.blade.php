@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('title')
-    Admin - Product
+    Admin - Product Gallery
 @endsection
 
 @section('content')
@@ -11,24 +11,22 @@ data-aos="fade-up"
 >
 <div class="container-fluid">
   <div class="dashboard-heading">
-    <h2 class="dashboard-title">Product</h2>
-    <p class="dashboard-subtitle">List of Product</p>
+    <h2 class="dashboard-title">Product Gallery</h2>
+    <p class="dashboard-subtitle">List of Product Gallery</p>
   </div>
   <div class="dashboard-content">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">+ Tambah Produk Baru</a>
+                    <a href="{{ route('product-gallery.create') }}" class="btn btn-primary mb-3">+ Tambah Gallery Baru</a>
                     <div class="table-responsive">
                         <table class="table table-hover scroll-horizontal-vertical w-100" id="crudTable">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nama Produk</th>
-                                    <th>Pemilik</th>
-                                    <th>Kategori</th>
-                                    <th>Harga</th>
+                                    <th>Produk</th>
+                                    <th>Foto</th>
                                     <th>Aksi</th>
                                 </tr>
                             </thead>
@@ -55,10 +53,8 @@ data-aos="fade-up"
             },
             columns: [
                 { data: 'id', name: 'id' },
-                { data: 'name', name: 'name' },
-                { data: 'user.name', name: 'user.name' },
-                { data: 'category.name', name: 'category.name' },
-                { data: 'price', name: 'price' },
+                { data: 'product.name', name: 'product.name' },
+                { data: 'photos', name: 'photos' },
                 {
                     data: 'action',
                     name: 'action',

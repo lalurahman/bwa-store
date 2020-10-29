@@ -33,27 +33,27 @@
           <div class="list-group list-group-flush">
             <a
               href="{{ route('dashboard') }}"
-              class="list-group-item list-group-item-action active"
+              class="list-group-item list-group-item-action {{ (request()->is('dashboard')) ? 'active' : '' }}"
               >Dashboard</a
             >
             <a
               href="{{ route('dashboard-products') }}"
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action {{ (request()->is('dashboard/products*')) ? 'active' : '' }}"
               >My Products</a
             >
             <a
               href="{{ route('dashboard-transaction') }}"
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action {{ (request()->is('dashboard/transactions*')) ? 'active' : '' }}"
               >Transactions</a
             >
             <a
               href="{{ route('dashboard-settings-store') }}"
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action {{ (request()->is('dashboard/settings*')) ? 'active' : '' }}"
               >Store Settings</a
             >
             <a
               href="{{ route('dashboard-settings-account') }}"
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action {{ (request()->is('dashboard/account*')) ? 'active' : '' }}"
               >My Account</a
             >
           </div>
@@ -81,50 +81,52 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- desktop -->
-                <ul class="navbar-nav d-none d-lg-flex ml-auto">
-                  <li class="nav-item dropdown">
-                    <a
-                      href="#"
-                      class="nav-link"
-                      role="button"
-                      id="navbarDropdown"
-                      data-toggle="dropdown"
-                    >
-                      <img
-                        src="/images/icon-user.png"
-                        alt="profile"
-                        class="rounded-circle mr-2 profile-picture"
-                      />
-                      Hi, Lalu
-                    </a>
-                    <div class="dropdown-menu">
-                      <a href="/dashboard.html" class="dropdown-item"
-                        >Dashboard</a
+                @auth
+                  <!-- desktop -->
+                  <ul class="navbar-nav d-none d-lg-flex ml-auto">
+                    <li class="nav-item dropdown">
+                      <a
+                        href="#"
+                        class="nav-link"
+                        role="button"
+                        id="navbarDropdown"
+                        data-toggle="dropdown"
                       >
-                      <a href="/dashboard-account.html" class="dropdown-item"
-                        >Settings</a
-                      >
-                      <div class="dropdown-divider"></div>
-                      <a href="#" class="dropdown-item">Logout</a>
-                    </div>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link d-inline-block mt-2">
-                      <img src="/images/icon-cart.svg" alt="" />
-                      <div class="cart-bagde">3</div>
-                    </a>
-                  </li>
-                </ul>
-                <!-- mobile -->
-                <ul class="navbar-nav d-block d-lg-none">
-                  <li class="nav-item">
-                    <a href="#" class="nav-link">Hi, Lalu</a>
-                  </li>
-                  <li class="nav-item">
-                    <a href="#" class="nav-link d-inline-block">Cart</a>
-                  </li>
-                </ul>
+                        <img
+                          src="/images/icon-user.png"
+                          alt="profile"
+                          class="rounded-circle mr-2 profile-picture"
+                        />
+                        Hi, {{ Auth::user()->name }}
+                      </a>
+                      <div class="dropdown-menu">
+                        <a href="{{ route('dashboard') }}" class="dropdown-item"
+                          >Dashboard</a
+                        >
+                        <a href="{{ route('dashboard-settings-account') }}" class="dropdown-item"
+                          >Settings</a
+                        >
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">Logout</a>
+                      </div>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-inline-block mt-2">
+                        <img src="/images/icon-cart.svg" alt="" />
+                        <div class="cart-bagde">3</div>
+                      </a>
+                    </li>
+                  </ul>
+                  <!-- mobile -->
+                  <ul class="navbar-nav d-block d-lg-none">
+                    <li class="nav-item">
+                      <a href="#" class="nav-link">Hi, Lalu</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#" class="nav-link d-inline-block">Cart</a>
+                    </li>
+                  </ul>
+                @endauth
               </div>
             </div>
           </nav>

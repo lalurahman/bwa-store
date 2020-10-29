@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/categories', 'CategoryController@index')->name('categories');
+Route::get('/categories/{id}', 'CategoryController@detail')->name('categories-detail');
 Route::get('/details/{id}', 'DetailController@index')->name('details');
 
 Route::get('/cart', 'CartController@index')->name('cart');
@@ -37,7 +38,8 @@ Route::prefix('admin')->group(function(){
     Route::get('/','Admin\DashboardController@index')->name('dashboard-admin');
     Route::resource('category', 'Admin\CategoryController');
     Route::resource('user', 'Admin\UserController');
-    Route::resource('product', 'Admin\ProductController');
+    Route::resource('products', 'Admin\ProductController');
+    Route::resource('product-gallery', 'Admin\ProductGalleryController');
 });
 Auth::routes();
 

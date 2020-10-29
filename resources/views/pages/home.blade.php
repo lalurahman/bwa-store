@@ -50,78 +50,29 @@
             </div>
         </div>
         <div class="row">
-            <div
-            class="col-4 col-md-3 col-lg-2"
-            data-aos="fade-up"
-            data-aos-delay="100"
-            >
-            <a href="#" class="component-categories d-block">
-                <div class="categories-image">
-                <img src="images/categories-gadgets.svg" class="w-100" />
+            @php
+                $incrementCategory = 0
+            @endphp
+            @forelse ($categories as $category)
+                <div
+                class="col-4 col-md-3 col-lg-2"
+                data-aos="fade-up"
+                data-aos-delay="{{ $incrementCategory+= 100 }}"
+                >
+                <a href="{{ route('categories-detail', $category->slug) }}" class="component-categories d-block">
+                    <div class="categories-image">
+                    <img src="{{ Storage::url($category->photo) }}" class="w-100" />
+                    </div>
+                    <p class="categories-text">{{ $category->name }}</p>
+                </a>
                 </div>
-                <p class="categories-text">Gatgets</p>
-            </a>
-            </div>
-            <div
-            class="col-4 col-md-3 col-lg-2"
-            data-aos="fade-up"
-            data-aos-delay="200"
-            >
-            <a href="#" class="component-categories d-block">
-                <div class="categories-image">
-                <img src="images/categories-gadgets.svg" class="w-100" />
+                
+            @empty
+                <div class="col-12 text-center py-5" data-aos="fade-up" data-aos-delay="100">
+                    No Categories Found
                 </div>
-                <p class="categories-text">Gatgets</p>
-            </a>
-            </div>
-            <div
-            class="col-4 col-md-3 col-lg-2"
-            data-aos="fade-up"
-            data-aos-delay="300"
-            >
-            <a href="#" class="component-categories d-block">
-                <div class="categories-image">
-                <img src="images/categories-gadgets.svg" class="w-100" />
-                </div>
-                <p class="categories-text">Gatgets</p>
-            </a>
-            </div>
-            <div
-            class="col-4 col-md-3 col-lg-2"
-            data-aos="fade-up"
-            data-aos-delay="400"
-            >
-            <a href="#" class="component-categories d-block">
-                <div class="categories-image">
-                <img src="images/categories-gadgets.svg" class="w-100" />
-                </div>
-                <p class="categories-text">Gatgets</p>
-            </a>
-            </div>
-            <div
-            class="col-4 col-md-3 col-lg-2"
-            data-aos="fade-up"
-            data-aos-delay="500"
-            >
-            <a href="#" class="component-categories d-block">
-                <div class="categories-image">
-                <img src="images/categories-gadgets.svg" class="w-100" />
-                </div>
-                <p class="categories-text">Gatgets</p>
-            </a>
-            </div>
-            <div
-            class="col-4 col-md-3 col-lg-2"
-            data-aos="fade-up"
-            data-aos-delay="600"
-            >
-            <a href="#" class="component-categories d-block">
-                <div class="categories-image">
-                <img src="images/categories-gadgets.svg" class="w-100" />
-                </div>
-                <p class="categories-text">Gatgets</p>
-            </a>
-            </div>
+            @endforelse
+            
         </div>
         </div>
     </section>
@@ -134,189 +85,44 @@
             </div>
         </div>
         <div class="row">
-            <div
-            class="col-6 col-md-4 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="100"
-            >
-            <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
+            @php
+                $incrementProduct = 0
+            @endphp
+            @forelse ($products as $product)
                 <div
-                    class="products-image"
-                    style="
-                    background-image: url('/images/products-apple-watch.jpg');
-                    "
-                ></div>
+                class="col-6 col-md-4 col-lg-3"
+                data-aos="fade-up"
+                data-aos-delay="{{ $incrementProduct+=100 }}"
+                >
+                <a href="{{ route('details', $product->slug)}}" class="component-products d-block">
+                    <div class="products-thumbnail">
+                    <div
+                        class="products-image"
+                        style="
+                        @if($product->galleries->count())
+                            background-image: url('{{ Storage::url($product->galleries->first()->photos) }}');
+                        @else
+                            background-color: #eee
+                        @endif
+                        "
+                    ></div>
+                    </div>
+                    <div class="products-text">
+                    {{ $product->name }}
+                    </div>
+                    <div class="products-price">
+                    IDR {{ $product->price }}
+                    </div>
+                </a>
                 </div>
-                <div class="products-text">
-                Apple Watch
-                </div>
-                <div class="products-price">
-                $890
-                </div>
-            </a>
+                
+            @empty
+            <div class="col-12 text-center py-5" data-aos="fade-up" data-aos-delay="100">
+                No Products Found
             </div>
+            @endforelse
 
-            <div
-            class="col-6 col-md-4 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="200"
-            >
-            <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                <div
-                    class="products-image"
-                    style="
-                    background-image: url('/images/products-apple-watch.jpg');
-                    "
-                ></div>
-                </div>
-                <div class="products-text">
-                Apple Watch
-                </div>
-                <div class="products-price">
-                $890
-                </div>
-            </a>
-            </div>
-
-            <div
-            class="col-6 col-md-4 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="300"
-            >
-            <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                <div
-                    class="products-image"
-                    style="
-                    background-image: url('/images/products-apple-watch.jpg');
-                    "
-                ></div>
-                </div>
-                <div class="products-text">
-                Apple Watch
-                </div>
-                <div class="products-price">
-                $890
-                </div>
-            </a>
-            </div>
-
-            <div
-            class="col-6 col-md-4 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="400"
-            >
-            <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                <div
-                    class="products-image"
-                    style="
-                    background-image: url('/images/products-apple-watch.jpg');
-                    "
-                ></div>
-                </div>
-                <div class="products-text">
-                Apple Watch
-                </div>
-                <div class="products-price">
-                $890
-                </div>
-            </a>
-            </div>
-
-            <div
-            class="col-6 col-md-4 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="500"
-            >
-            <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                <div
-                    class="products-image"
-                    style="
-                    background-image: url('/images/products-apple-watch.jpg');
-                    "
-                ></div>
-                </div>
-                <div class="products-text">
-                Apple Watch
-                </div>
-                <div class="products-price">
-                $890
-                </div>
-            </a>
-            </div>
-
-            <div
-            class="col-6 col-md-4 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="600"
-            >
-            <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                <div
-                    class="products-image"
-                    style="
-                    background-image: url('/images/products-apple-watch.jpg');
-                    "
-                ></div>
-                </div>
-                <div class="products-text">
-                Apple Watch
-                </div>
-                <div class="products-price">
-                $890
-                </div>
-            </a>
-            </div>
-
-            <div
-            class="col-6 col-md-4 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="700"
-            >
-            <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                <div
-                    class="products-image"
-                    style="
-                    background-image: url('/images/products-apple-watch.jpg');
-                    "
-                ></div>
-                </div>
-                <div class="products-text">
-                Apple Watch
-                </div>
-                <div class="products-price">
-                $890
-                </div>
-            </a>
-            </div>
-
-            <div
-            class="col-6 col-md-4 col-lg-3"
-            data-aos="fade-up"
-            data-aos-delay="800"
-            >
-            <a href="/details.html" class="component-products d-block">
-                <div class="products-thumbnail">
-                <div
-                    class="products-image"
-                    style="
-                    background-image: url('/images/products-apple-watch.jpg');
-                    "
-                ></div>
-                </div>
-                <div class="products-text">
-                Apple Watch
-                </div>
-                <div class="products-price">
-                $890
-                </div>
-            </a>
-            </div>
+            
         </div>
         </div>
     </section>
