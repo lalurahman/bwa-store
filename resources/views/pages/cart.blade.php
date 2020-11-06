@@ -17,7 +17,7 @@
             <nav>
               <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                  <a href="/index.html">Home</a>
+                  <a href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="breadcrumb-item active">
                   Cart
@@ -43,63 +43,34 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>
-                    <img
-                      src="/images/product-card-1.png"
-                      class="cart-image"
-                    />
-                  </td>
-                  <td>
-                    <div class="product-title">Sofa Ternyaman</div>
-                    <div class="product-subtitle">By Lalu rahman</div>
-                  </td>
-                  <td>
-                    <div class="product-title">$ 109</div>
-                    <div class="product-subtitle">USD</div>
-                  </td>
-                  <td>
-                    <a href="#" class="btn btn-remove-cart">Remove</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="width: 20%;">
-                    <img
-                      src="/images/product-card-1.png"
-                      class="cart-image"
-                    />
-                  </td>
-                  <td style="width: 35%;">
-                    <div class="product-title">Sofa Ternyaman</div>
-                    <div class="product-subtitle">By Lalu rahman</div>
-                  </td>
-                  <td style="width: 35%;">
-                    <div class="product-title">$ 109</div>
-                    <div class="product-subtitle">USD</div>
-                  </td>
-                  <td style="width: 10%;">
-                    <a href="#" class="btn btn-remove-cart">Remove</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <img
-                      src="/images/product-card-1.png"
-                      class="cart-image"
-                    />
-                  </td>
-                  <td>
-                    <div class="product-title">Sofa Ternyaman</div>
-                    <div class="product-subtitle">By Lalu rahman</div>
-                  </td>
-                  <td>
-                    <div class="product-title">$ 109</div>
-                    <div class="product-subtitle">USD</div>
-                  </td>
-                  <td>
-                    <a href="#" class="btn btn-remove-cart">Remove</a>
-                  </td>
-                </tr>
+                @foreach ($carts as $cart)
+                  <tr>
+                    <td>
+                      @if ($cart->product->galleries)
+                        <img
+                          src="{{ Storage::url($cart->product->galleries->first()->photos) }}"
+                          class="cart-image"
+                        />
+                      @endif
+                    </td>
+                    <td>
+                      <div class="product-title">{{ $cart->product->name }}</div>
+                      <div class="product-subtitle">By {{ $cart->user->store_name }}</div>
+                    </td>
+                    <td>
+                      <div class="product-title">Rp. {{ number_format($cart->product->price) }}</div>
+                      <div class="product-subtitle">IDR</div>
+                    </td>
+                    <td>
+                      <form action="{{ route('delete-cart', $cart->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-remove-cart">Remove</button>
+                      </form>
+                    </td>
+                  </tr>
+                @endforeach
+                
               </tbody>
             </table>
           </div>

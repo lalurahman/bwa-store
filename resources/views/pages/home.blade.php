@@ -111,7 +111,7 @@
                     {{ $product->name }}
                     </div>
                     <div class="products-price">
-                    IDR {{ $product->price }}
+                    IDR {{ number_format($product->price) }}
                     </div>
                 </a>
                 </div>

@@ -17,7 +17,7 @@
             <nav>
                 <ol class="breadcrumb">
                 <li class="breadcrumb-item">
-                    <a href="/index.html">Home</a>
+                    <a href="{{ route('home') }}">Home</a>
                 </li>
                 <li class="breadcrumb-item active">
                     Product Details
@@ -64,19 +64,28 @@
         </div>
     </section>
 
-    <div class="store-details-container" data-aos="fade-up">
+    <div class="store-details-container mt-3" data-aos="fade-up">
         <section class="store-heading">
         <div class="container">
             <div class="row">
             <div class="col-lg-8">
-                <h1>Sofa Ternyaman</h1>
-                <div class="owner">By Lalu Abdurrahman</div>
-                <div class="price">$1,409</div>
+                <h1>{{ $product->name }}</h1>
+                <div class="owner">By {{ $product->user->store_name }}</div>
+                <div class="price">IDR {{ number_format($product->price) }}</div>
             </div>
             <div class="col-lg-2" data-aos="zoom-in">
-                <a href="{{ route('cart') }}" class="btn btn-success btn-block px-4 mb-3"
-                >Add to Cart</a
-                >
+                @auth
+                    <form action="{{ route('details-add', $product->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <button type="submit" class="btn btn-success btn-block px-4 mb-3"
+                        >Add to Cart
+                        </button>
+                    </form>
+                @else  
+                    <a href="{{ route('login') }}" class="btn btn-success btn-block px-4 mb-3"
+                    >Sign in to Add</a
+                    >
+                @endauth
             </div>
             </div>
         </div>
@@ -85,18 +94,7 @@
         <div class="container">
             <div class="row">
             <div class="col-12 col-lg-8" data-aos="zoom-in">
-                <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
-                reprehenderit eligendi quibusdam, ut ducimus vel nihil alias
-                minus explicabo cumque, sit accusamus blanditiis maiores,
-                provident debitis optio modi obcaecati pariatur.
-                </p>
-                <p>
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                Nulla quibusdam dolor dolorem architecto explicabo impedit
-                ducimus qui voluptatibus ipsum ad consectetur inventore
-                officia nisi illo, delectus nam commodi vel consequuntur.
-                </p>
+                {!! $product->description !!}
             </div>
             </div>
         </div>
@@ -170,23 +168,13 @@
     data: {
       activePhoto: 0,
       photos: [
-        {
-          id: 1,
-          url: "/images/product-details-1.jpg",
-        },
-        {
-          id: 2,
-          url: "/images/product-details-2.jpg",
-        },
-        {
-          id: 3,
-          url: "/images/product-details-3.jpg",
-        },
-        {
-          id: 4,
-          url: "/images/product-details-4.jpg",
-        },
-      ],
+        @foreach($product->galleries as $gallery)
+            {
+            id: {{ $gallery->id }},
+            url: "{{ Storage::url($gallery->photos) }}",
+            },
+        @endforeach
+      ]
     },
     methods: {
       changeActive(id) {

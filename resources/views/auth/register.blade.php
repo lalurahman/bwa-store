@@ -137,7 +137,10 @@
                   @endforeach
                 </select>
               </div>
-              <button type="submit" class="btn btn-success btn-block mt-4" :disabled="this.email_unavailable">
+              <button 
+                type="submit" 
+                class="btn btn-success btn-block mt-4" 
+                :disabled="this.email_unavailable">
                 Sign Up Now
               </button>
               <a href="{{ route('login') }}" class="btn btn-signup btn-block mt-2">
