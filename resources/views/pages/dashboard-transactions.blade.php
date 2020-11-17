@@ -56,96 +56,40 @@ data-aos="fade-up"
             role="tabpanel"
             aria-labelledby="pills-home-tab"
             >
-            <a
-                href="/dashboard-transactions-details.html"
-                class="card card-list d-block"
-            >
-                <div class="card-body">
-                <div class="row">
-                    <div class="col-md-1">
-                    <img
-                        src="/images/dashboard-icon-product-1.png"
-                        alt=""
-                    />
-                    </div>
-                    <div class="col-md-4">
-                    Shirup marzaann
-                    </div>
-                    <div class="col-md-3">
-                    Aswar kasim
-                    </div>
-                    <div class="col-md-3">
-                    12 Juni, 2020
-                    </div>
-                    <div class="col-md-1 d-none d-md-block">
-                    <img
-                        src="/images/dashboard-arrow-right.svg"
-                        alt=""
-                    />
-                    </div>
-                </div>
-                </div>
-            </a>
-            <a
-                href="/dashboard-transactions-details.html"
-                class="card card-list d-block"
-            >
-                <div class="card-body">
-                <div class="row">
-                    <div class="col-md-1">
-                    <img
-                        src="/images/dashboard-icon-product-1.png"
-                        alt=""
-                    />
-                    </div>
-                    <div class="col-md-4">
-                    Shirup marzaann
-                    </div>
-                    <div class="col-md-3">
-                    Aswar kasim
-                    </div>
-                    <div class="col-md-3">
-                    12 Juni, 2020
-                    </div>
-                    <div class="col-md-1 d-none d-md-block">
-                    <img
-                        src="/images/dashboard-arrow-right.svg"
-                        alt=""
-                    />
-                    </div>
-                </div>
-                </div>
-            </a>
-            <a
-                href="/dashboard-transactions-details.html"
-                class="card card-list d-block"
-            >
-                <div class="card-body">
-                <div class="row">
-                    <div class="col-md-1">
-                    <img
-                        src="/images/dashboard-icon-product-1.png"
-                        alt=""
-                    />
-                    </div>
-                    <div class="col-md-4">
-                    Shirup marzaann
-                    </div>
-                    <div class="col-md-3">
-                    Aswar kasim
-                    </div>
-                    <div class="col-md-3">
-                    12 Juni, 2020
-                    </div>
-                    <div class="col-md-1 d-none d-md-block">
-                    <img
-                        src="/images/dashboard-arrow-right.svg"
-                        alt=""
-                    />
-                    </div>
-                </div>
-                </div>
-            </a>
+                @foreach ($sellTransactions as $transaction)
+                    <a
+                        href="{{ route('dashboard-transaction-details', $transaction->id) }}"
+                        class="card card-list d-block"
+                    >
+                        <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-1">
+                            <img
+                                src="{{ Storage::url($transaction->product->galleries->first()->photos ?? '') }}"
+                                alt=""
+                                class="w-75"
+                            />
+                            </div>
+                            <div class="col-md-4">
+                            {{ $transaction->product->name }}
+                            </div>
+                            <div class="col-md-3">
+                            {{ $transaction->product->user->store_name }}
+                            </div>
+                            <div class="col-md-3">
+                            {{ date_format($transaction->created_at, 'd F, Y') }}
+                            </div>
+                            <div class="col-md-1 d-none d-md-block">
+                            <img
+                                src="/images/dashboard-arrow-right.svg"
+                                alt=""
+                            />
+                            </div>
+                        </div>
+                        </div>
+                    </a>
+                    
+                @endforeach
             </div>
             <div
             class="tab-pane fade"
@@ -153,7 +97,40 @@ data-aos="fade-up"
             role="tabpanel"
             aria-labelledby="pills-profile-tab"
             >
-            disini
+            @foreach ($buyTransactions as $transaction)
+                <a
+                    href="{{ route('dashboard-transaction-details', $transaction->id) }}"
+                    class="card card-list d-block"
+                >
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-1">
+                        <img
+                            src="{{ Storage::url($transaction->product->galleries->first()->photos ?? '') }}"
+                            alt=""
+                            class="w-75"
+                        />
+                        </div>
+                        <div class="col-md-4">
+                        {{ $transaction->product->name }}
+                        </div>
+                        <div class="col-md-3">
+                        {{ $transaction->product->user->store_name }}
+                        </div>
+                        <div class="col-md-3">
+                        {{ date_format($transaction->created_at, 'd F, Y') }}
+                        </div>
+                        <div class="col-md-1 d-none d-md-block">
+                        <img
+                            src="/images/dashboard-arrow-right.svg"
+                            alt=""
+                        />
+                        </div>
+                    </div>
+                    </div>
+                </a>
+                
+            @endforeach
             </div>
         </div>
         </div>
